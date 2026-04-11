@@ -1,6 +1,6 @@
 import socket
 import os
-from llamaAPI import llamaAPI
+import llamaAPI
 class Client:
 
     def __init__(self):
@@ -21,7 +21,7 @@ class Client:
                 reply = s.recv(self.buffer_size)
                 print(reply.decode())
                 while True:
-                    print("*********************************************************************************************************")
+                    print("*********************************************************************************************************************************************************************************************************")
                     seconduser_input = input("Enter more prompts: ")
                     if seconduser_input.strip() == "exit" or not seconduser_input.strip():
                        break

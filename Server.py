@@ -1,5 +1,5 @@
 import socket
-from llamaAPI import llamaAPI
+import llamaAPI
 class Server:
     #server script must be ran first
     #setting up a tcp connection 
