@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">    
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WebSocket Client</title>
+</head>
+<body>
+   <input type="text" id="messageInput" placeholder="Enter a message...">
+   <button onclick="sendMessage()">Send</button>
+   <div id="messages"></div>
+   <script>
+        const ws = new WebSocket("ws://localhost:8000/ws"); // opens a WebSocket connection to the server
+        ws.onmessage = function(event) {
+            const messages = document.getElementById("messages"); 
+            messages.innerHTML += "<p>" + event.data + "</p>";
+        };
+        function sendMessage() {  // sends a message to the server
+            const input = document.getElementById("messageInput");
+            ws.send(input.value);
+            input.value = "";
+        }
+        document.getElementById("messageInput").onkeydown = function(event) {  // allows sending a message by pressing the Enter key
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        };
+    </script>
+</body>
+</html>
