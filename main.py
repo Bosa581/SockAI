@@ -1,5 +1,7 @@
+import asyncio
 from fastapi import FastAPI, WebSocket
 from fastapi.responses import FileResponse
+from agent import Agent
 app = FastAPI()
 @app.websocket("/ws")
 async def websocket_endpoint(websocket: WebSocket):
@@ -9,11 +11,17 @@ async def websocket_endpoint(websocket: WebSocket):
         if message.strip().lower() == "exit": # If the message is "exit", close the connection
             await websocket.close()
             break
-        await websocket.send_text(f"Message received: {message}")  # Echo the received message back to the client
+        await websocket.send_text(f"Received: {message}")  # Echo the received message back to the client
+        response = sock_agent.actions(current_file=None, prompt=message)
+        await websocket.send_text(response)  # Send the response back to the client
+
 
 @app.get("/")
 async def get():
     return FileResponse("client.html")
+sock_agent = Agent(  #creates an instance of the Agent class and telling it which project we are working on-modified later
+    r"C:\Users\orobo\OneDrive\Desktop\Project20 - Copy\SockAI"
+)
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
