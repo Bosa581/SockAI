@@ -24,4 +24,7 @@ sock_agent = Agent(  #creates an instance of the Agent class and telling it whic
 )
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True)
+    uvicorn.run("main:app", host="127.0.0.1", port=8000, reload=True) 
+    #reload allows my program to restart or reload when a change is made without having to 
+    # manually stop and restart the server. This is useful for development and testing, as it allows for 
+    # faster iteration and debugging.
